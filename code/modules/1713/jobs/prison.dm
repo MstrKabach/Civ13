@@ -4,7 +4,7 @@
 	rank_abbreviation = "NKVD Kom."
 
 
-	spawn_location = "JoinLateRUCap"
+	spawn_location = "JoinLateRUCom"
 	is_officer = TRUE
 	whitelisted = TRUE
 	is_commander = TRUE
@@ -63,7 +63,7 @@
 	is_prison = TRUE
 
 	min_positions = 2
-	max_positions = 10
+	max_positions = 4
 
 /datum/job/russian/nkvd_gulag_officer/equip(var/mob/living/human/H)
 	if (!H)	return FALSE
