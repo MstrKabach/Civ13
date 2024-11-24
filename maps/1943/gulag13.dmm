@@ -608,9 +608,6 @@
 	icon_state = "bulb";
 	dir = 8
 	},
-/obj/item/ammo_magazine/mosin,
-/obj/item/ammo_magazine/mosin,
-/obj/item/weapon/gun/projectile/boltaction/mosin/m30/sniper,
 /turf/floor/plating/tiled/dark,
 /area/caribbean/houses/nml_two)
 "bX" = (
@@ -2682,6 +2679,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/accessory/medal/soviet/ww2/Hero_of_the_Soviet_Union,
 /obj/item/weapon/attachment/scope/adjustable/binoculars/binoculars,
+/obj/item/clothing/gloves/watch/goldwatch,
 /turf/floor/plating/tiled/dark,
 /area/caribbean/houses/nml_two)
 "hL" = (
@@ -2899,7 +2897,9 @@
 /turf/floor/dirt/winter,
 /area/caribbean/nomads/ice)
 "ij" = (
-/obj/structure/simple_door/key_door/soviet/guard/max,
+/obj/structure/simple_door/key_door/soviet/guard/max{
+	code = 4977
+	},
 /turf/floor/plating/tiled/dark,
 /area/caribbean/houses/nml_two)
 "ik" = (
@@ -3638,15 +3638,9 @@
 /turf/floor/plating/tiled,
 /area/caribbean/houses/nml_two)
 "kk" = (
-/obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda,
-/obj/effect/floor_decal/industrial/danger{
-	icon_state = "danger";
-	dir = 4
-	},
-/turf/floor/plating/tiled/dark,
-/area/caribbean/houses/nml_one)
+/obj/structure/wild/tree_stump,
+/turf/floor/winter,
+/area/caribbean/nomads/ice)
 "km" = (
 /obj/structure/closet/crate/footlocker,
 /turf/floor/plating/tiled,
@@ -3875,6 +3869,7 @@
 "kV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/fancy/candle_box,
+/obj/item/weapon/flame/lighter/zippo,
 /turf/floor/plating/tiled/dark,
 /area/caribbean/houses/nml_one)
 "kW" = (
@@ -5044,15 +5039,6 @@
 /obj/structure/window/barrier/railing/stone,
 /turf/floor/plating/cobblestone/vertical,
 /area/caribbean/russian/land/outside/tundra)
-"on" = (
-/obj/structure/table/wood,
-/obj/effect/floor_decal/industrial/danger{
-	icon_state = "danger";
-	dir = 4
-	},
-/obj/item/weapon/flame/lighter/zippo,
-/turf/floor/plating/tiled/dark,
-/area/caribbean/houses/nml_one)
 "oo" = (
 /obj/structure/simple_door/key_door/soviet/guard{
 	name = "S6 SHUTTER";
@@ -5110,11 +5096,21 @@
 /turf/floor/plating/tiled,
 /area/caribbean/houses/nml_two)
 "ow" = (
-/obj/structure/closet/cabinet,
-/obj/item/weapon/attachment/scope/adjustable/binoculars/binoculars,
-/obj/item/clothing/gloves/watch/goldwatch,
+/obj/structure/closet/cabinet/ceiling{
+	name = "Cutlery"
+	},
+/obj/item/weapon/material/kitchen/utensil/knife/butcher,
+/obj/item/weapon/material/kitchen/utensil/knife/steel,
+/obj/item/weapon/material/kitchen/utensil/knife/steel,
+/obj/item/weapon/material/kitchen/utensil/knife/steel,
+/obj/item/weapon/material/kitchen/utensil/fork,
+/obj/item/weapon/material/kitchen/utensil/spoon,
+/obj/item/weapon/material/kitchen/utensil/fork,
+/obj/item/weapon/material/kitchen/utensil/fork,
+/obj/item/weapon/material/kitchen/utensil/spoon,
+/obj/item/weapon/material/kitchen/utensil/spoon,
 /turf/floor/plating/tiled/dark,
-/area/caribbean/houses/nml_two)
+/area/caribbean/houses/nml_one)
 "oy" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	icon_state = "warning_dust";
@@ -5222,19 +5218,7 @@
 /turf/floor/plating/tiled/woodv,
 /area/caribbean/houses/nml_one)
 "oS" = (
-/obj/structure/closet/cabinet/ceiling{
-	name = "Cutlery"
-	},
-/obj/item/weapon/material/kitchen/utensil/knife/steel,
-/obj/item/weapon/material/kitchen/utensil/knife/steel,
-/obj/item/weapon/material/kitchen/utensil/knife/steel,
-/obj/item/weapon/material/kitchen/utensil/spoon,
-/obj/item/weapon/material/kitchen/utensil/spoon,
-/obj/item/weapon/material/kitchen/utensil/spoon,
-/obj/item/weapon/material/kitchen/utensil/fork,
-/obj/item/weapon/material/kitchen/utensil/fork,
-/obj/item/weapon/material/kitchen/utensil/fork,
-/obj/item/weapon/material/kitchen/utensil/knife/butcher,
+/obj/structure/table/wood,
 /obj/structure/cutting_board,
 /turf/floor/plating/tiled/dark,
 /area/caribbean/houses/nml_one)
@@ -7029,9 +7013,12 @@
 /turf/floor/dirt/dust,
 /area/caribbean/prison)
 "Kh" = (
-/obj/structure/wild/tree_stump,
-/turf/floor/dirt,
-/area/caribbean/nomads/ice)
+/obj/item/weapon/flame/candle/on{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/turf/floor/plating/tiled/dark,
+/area/caribbean/houses/nml_one)
 "Ku" = (
 /obj/structure/vending/sales/market_stall/prepared/gulag/food,
 /obj/structure/lamp/lamp_small/alwayson{
@@ -50833,7 +50820,7 @@ ac
 ac
 ab
 ac
-ab
+kk
 ab
 ac
 ac
@@ -51843,7 +51830,7 @@ ac
 ac
 ac
 ab
-Kh
+eu
 mF
 mF
 mF
@@ -52093,7 +52080,7 @@ hK
 LR
 fg
 fg
-ow
+fg
 LR
 iN
 gY
@@ -56947,9 +56934,9 @@ cE
 nD
 dD
 dD
+dD
 jx
 jx
-jY
 jY
 ch
 ci
@@ -58973,7 +58960,7 @@ jO
 jO
 El
 Ok
-do
+Kh
 JA
 hM
 Rc
@@ -59580,8 +59567,8 @@ jO
 cN
 em
 do
+do
 oS
-hH
 rH
 pB
 mw
@@ -59780,7 +59767,7 @@ hs
 yJ
 hD
 cN
-do
+ow
 do
 do
 do
@@ -59948,7 +59935,7 @@ ac
 Ri
 nb
 qb
-bP
+dI
 bs
 xE
 qM
@@ -60189,8 +60176,8 @@ hG
 hG
 hG
 ie
-kk
-on
+ie
+hG
 rL
 qC
 qC
@@ -61766,7 +61753,7 @@ ac
 pR
 pO
 qd
-bP
+dI
 cb
 cD
 dd
