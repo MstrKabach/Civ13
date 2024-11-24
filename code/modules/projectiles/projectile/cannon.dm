@@ -82,12 +82,16 @@
 		firer_original_dir = dir
 	firedfrom = launcher
 
-	if(user.buckled)
-		for (var/obj/structure/turret/T in curloc)
-			fired_from_turret = TRUE
+	if(user.buckled && istype(user.buckled, /obj/structure/bed/chair/turret_seat))
+		var/obj/structure/bed/chair/turret_seat/S = user.buckled
+		if(S.turret)
+			if(launcher.loc != user)
+				fired_from_roof = TRUE
+			else if (S.hatch_icon && S.is_open)
+				fired_from_roof = TRUE
 		for (var/obj/structure/vehicleparts/frame/F in curloc)
 			fired_from_axis = F.axis
-			layer = 11
+			layer = 14
 
 	original = target
 	loc = curloc
@@ -107,7 +111,10 @@
 /obj/item/projectile/shell/proc/initiate(var/turf/T)
 	if(!T)
 		return
-	impact_effect()
+	if(initiated)
+		impact_effect()
+	else
+		turf_impact_effect()
 	var/caliber_modifier = clamp(round(caliber / 50), 0, 4)
 	if (!istype(T, /turf/floor/beach) && !istype(T, /turf/floor/broken_floor) && !istype(T, /turf/floor/trench))
 		T.ChangeTurf(/turf/floor/dirt/burned)
@@ -195,7 +202,7 @@
 /obj/item/projectile/shell/autocannon
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	tracer_type = /obj/effect/projectile/tracer
+	tracer_type = /obj/effect/projectile/tracer/minor
 
 /obj/item/projectile/shell/autocannon/New()
 	..()
@@ -216,6 +223,12 @@
 	heavy_armor_penetration = 65
 	caliber = 25
 
+/obj/item/projectile/shell/autocannon/a25_ap/tracer
+	atype = "AP"
+	heavy_armor_penetration = 65
+	caliber = 25
+	tracer_type = /obj/effect/projectile/tracer
+
 /obj/item/projectile/shell/autocannon/a30_he
 	atype = "HE"
 	heavy_armor_penetration = 8
@@ -225,6 +238,12 @@
 	atype = "AP"
 	heavy_armor_penetration = 82
 	caliber = 30
+
+/obj/item/projectile/shell/autocannon/a30_ap/tracer
+	atype = "AP"
+	heavy_armor_penetration = 82
+	caliber = 30
+	tracer_type = /obj/effect/projectile/tracer
 
 /obj/item/projectile/shell/autocannon/a35_fap
 	atype = "APCR"

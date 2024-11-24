@@ -114,7 +114,7 @@
 	magazine_type = /obj/item/ammo_magazine/ammo127
 	good_mags = list(/obj/item/ammo_magazine/ammo127)
 	firemodes = list(
-		list(name = "full auto", burst=2, burst_delay=2, fire_delay=2, accuracy=list(2))
+		list(name = "full auto", burst=1, burst_delay=2, fire_delay=2, accuracy=list(2))
 		)
 	ammo_type = /obj/item/ammo_casing/a127
 	recoil = 10
@@ -320,7 +320,7 @@
 	is_hmg = TRUE
 	full_auto = FALSE
 	recoil = 5
-	accuracy = 1
+	accuracy = 3
 
 /obj/item/weapon/gun/projectile/automatic/stationary/autocannon/process_projectile(obj/projectile, mob/user, atom/target, var/target_zone, var/params=null)
 	var/obj/item/projectile/P = projectile

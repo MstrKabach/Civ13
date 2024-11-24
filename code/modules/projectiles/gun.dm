@@ -70,7 +70,9 @@
 	var/list/scope_mounts = list() //List of extra compatible scopes
 
 	var/damage_modifier = 0
-
+	var/walk_accuracy_debuff = 20
+	var/pickup_accuracy_debuff = 20
+	var/onehand_accuracy_debuff = 20
 	var/last_pick_up = 0
 
 //	var/wielded = FALSE
@@ -90,6 +92,8 @@
 
 	var/gibs = FALSE
 	var/crushes = FALSE
+
+	var/obj/structure/bed/chair/mount = null
 
 	health = 200 //guns are stronk, rarely exploded.
 
@@ -238,6 +242,23 @@
 	..()
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, clickparams=null, pointblank=0, reflex=0, forceburst = -1, force = FALSE, accuracy_mod = 1)
+	if (mount)
+		var/turf/firing_turf = get_turf(mount)
+		var/turf/target_turf = get_turf(target)
+		var/dx = target_turf.x - firing_turf.x
+		var/dy = target_turf.y - firing_turf.y
+		var/shot_angle = Atan2(dx, dy)
+		if (shot_angle < 0)
+			shot_angle = 180 + (180 - abs(shot_angle))
+		var/shot_dir = EAST
+		if(shot_angle >= 45 && shot_angle < 135)
+			shot_dir = NORTH
+		else if(shot_angle >= 135 && shot_angle < 225)
+			shot_dir = WEST
+		else if(shot_angle >= 225 && shot_angle < 315)
+			shot_dir = SOUTH
+		if(mount.dir != shot_dir)
+			return
 	if (!user || !target) return
 
 	add_fingerprint(user)
@@ -399,18 +420,18 @@
 			recoil_range -= sqrt(dt) * 1.5
 
 	if(user.lying || user.prone)
-		recoil_range /= 2
+		recoil_range *= 0.5
 
 	if(dt_movement <= 6 && user.m_intent != "stealth")
-		accuracy_range = 30
+		accuracy_range = walk_accuracy_debuff
 	else if (dt_movement < 10 && user.m_intent != "stealth")
-		accuracy_range = 40 / (dt_movement - 6)
+		accuracy_range = walk_accuracy_debuff / (dt_movement - 6)
 
 	if(dt_picked_up < 10)
-		accuracy_range += 40 / sqrt(dt_picked_up) / ergonomics
+		accuracy_range += pickup_accuracy_debuff / sqrt(dt_picked_up) / ergonomics
 
 	if(user.get_inactive_hand())
-		accuracy_range += 20
+		accuracy_range += onehand_accuracy_debuff
 
 	return recoil_range + accuracy_range
 
@@ -440,29 +461,32 @@
 			shot_recoil = 0
 
 	if(user.lying || user.prone)
-		shot_recoil /= 2
+		shot_recoil *= 0.5
+
+	if(istype(get_turf(src), /turf/floor/trench) && check_trench_buff(target))
+		shot_recoil *= 0.5
 
 	var/shot_accuracy = rand(-accuracy, accuracy)
 
 	var/dt_movement = world.time - user.last_movement
 
 	if (dt_movement <= 6)
-		shot_accuracy = rand(-20, 20)
+		shot_accuracy = rand(-walk_accuracy_debuff, walk_accuracy_debuff)
 	else if (dt_movement < 10 && user.m_intent != "stealth")
-		var/accuracy_range = 20 / sqrt(dt_movement - 6)
+		var/accuracy_range = walk_accuracy_debuff / sqrt(dt_movement - 6)
 		shot_accuracy = rand(-accuracy_range, accuracy_range)
-		if (abs(shot_accuracy) < 5) // even RNjesus won’t help you get there right away
+		if (abs(shot_accuracy) < walk_accuracy_debuff * 0.25) // even RNjesus won’t help you get there right away
 			shot_accuracy += 5
 		if(user.m_intent != "run")
 			shot_accuracy *= 0.75
 
 	var/dt_picked_up = world.time - last_pick_up
-	if(dt_picked_up < 15)
-		var/accuracy_range = 30 / sqrt(dt_picked_up)
+	if(dt_picked_up < 15 && loc == user)
+		var/accuracy_range = pickup_accuracy_debuff / sqrt(dt_picked_up)
 		shot_accuracy += rand(-accuracy_range, accuracy_range)
 
-	if(user.get_inactive_hand())
-		shot_accuracy += rand(-20, 20)
+	if(user.get_inactive_hand() && loc == user)
+		shot_accuracy += rand(-onehand_accuracy_debuff, onehand_accuracy_debuff)
 
 	var/shot_dispersion = clamp(shot_recoil + shot_accuracy, -40, 40)
 
@@ -487,6 +511,21 @@
 		last_shot_time = world.time
 		return FALSE
 	return TRUE
+
+/obj/item/weapon/gun/proc/check_trench_buff(var/turf/target)
+	var/turf/fired_from = get_turf(src)
+	var/target_x_dir = 0
+	var/target_y_dir = 0
+	if(target.x - fired_from.x > 0)
+		target_x_dir = 1
+	else if (target.x - fired_from.x < 0)
+		target_x_dir = -1
+	if(target.y - fired_from.y > 0)
+		target_y_dir = 1
+	else if (target.y - fired_from.y < 0)
+		target_y_dir = -1
+	if(!istype(locate(fired_from.x + target_x_dir, fired_from.y + target_y_dir, fired_from.z), /turf/floor/trench))
+		return TRUE
 
 //Suicide handling.
 /obj/item/weapon/gun/var/mouthshoot = FALSE //To stop people from suiciding twice... >.>
